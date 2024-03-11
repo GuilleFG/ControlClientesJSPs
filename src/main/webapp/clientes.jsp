@@ -1,4 +1,4 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 
 <!DOCTYPE html>
@@ -13,22 +13,21 @@
     <body>
         <!-- cabecero -->
         <jsp:include page="WEB-INF/paginas/comunes/cabecero.jsp"/>
-        
+
         <!-- Botones de Navegacion -->
         <jsp:include page="WEB-INF/paginas/comunes/botonesNavegacion.jsp"/>
-        
-        
-        <ul>
-            <c:forEach var="cliente" items="${clientes}">
-                <li>${cliente.idCliente} ${cliente.nombre} ${cliente.apellido}  ${cliente.saldo}</li>
-                </c:forEach>
-        </ul>
+
+        <!-- Listadp Clientes -->
+        <jsp:include page="WEB-INF/paginas/cliente/listadoClientes.jsp"/>
+
         <!-- Pie de pagina -->
         <jsp:include page="WEB-INF/paginas/comunes/piePagina.jsp"/>
+
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-        
+
     </body>
 
 </html>
