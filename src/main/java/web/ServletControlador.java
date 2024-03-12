@@ -15,7 +15,19 @@ public class ServletControlador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        this.accionDefault(request, response);
+        String accion = request.getParameter("accion");
+        if (accion != null) {
+            switch (accion) {
+                case "editar":
+                    this.insertarCliente(request, response);
+                    break;
+                default:
+                    this.accionDefault(request, response);
+            }
+        }
+        else{
+            this.accionDefault(request, response);
+        }
     }
 
     private void accionDefault(HttpServletRequest request, HttpServletResponse response)
