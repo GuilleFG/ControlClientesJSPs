@@ -19,13 +19,12 @@ public class ServletControlador extends HttpServlet {
         if (accion != null) {
             switch (accion) {
                 case "editar":
-                    this.insertarCliente(request, response);
+                    this.editarCliente(request, response);
                     break;
                 default:
                     this.accionDefault(request, response);
             }
-        }
-        else{
+        } else {
             this.accionDefault(request, response);
         }
     }
@@ -50,6 +49,18 @@ public class ServletControlador extends HttpServlet {
         return saldoTotal;
     }
 
+    private void editarCliente(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //recuperamos el idCliente
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+        System.out.println("Imprimiendo el id Cliente cogido por get parameter= " + idCliente);
+        Cliente cliente = new ClienteDaoJDBC().encontrar(new Cliente(idCliente));
+        request.setAttribute("cliente", cliente);
+        String jspEditar = "/WEB-INF/paginas/cliente/editarCliente.jsp";
+        request.getRequestDispatcher(jspEditar).forward(request, response);
+        System.out.println("Imprimiendo cliente encontrado: "+ cliente.toString());
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -59,11 +70,14 @@ public class ServletControlador extends HttpServlet {
                 case "insertar":
                     this.insertarCliente(request, response);
                     break;
+                case "modificar":
+                    this.modificarCliente(response, request);
+                    break;
+                   
                 default:
                     this.accionDefault(request, response);
             }
-        }
-        else{
+        } else {
             this.accionDefault(request, response);
         }
     }
@@ -77,18 +91,44 @@ public class ServletControlador extends HttpServlet {
         String telefono = request.getParameter("telefono");
         double saldo = 0;
         String saldoString = request.getParameter("saldo");
-        if(saldoString != null && !"".equals(saldoString)){
+        if (saldoString != null && !"".equals(saldoString)) {
             saldo = Double.parseDouble(saldoString);
         }
-        
+
         //Creamos el objeto de cliente (modelo)
         Cliente cliente = new Cliente(nombre, apellido, email, telefono, saldo);
-        
+
         //Insertamos el nuevo objeto en la base de datos
         int registrosModificados = new ClienteDaoJDBC().insertar(cliente);
         System.out.println("registrosModificados = " + registrosModificados);
-        
+
         //Redirigimos hacia accion por default
         this.accionDefault(request, response);
+    }
+    private void modificarCliente(HttpServletResponse response, HttpServletRequest request)throws ServletException, IOException{
+        //recuperamos los valores del formulario edirtarCliente
+        
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String email = request.getParameter("email");
+        String telefono = request.getParameter("telefono");
+        double saldo = 0;
+        String saldoString = request.getParameter("saldo");
+        if (saldoString != null && !"".equals(saldoString)) {
+            saldo = Double.parseDouble(saldoString);
+        }
+
+        //Creamos el objeto de cliente (modelo)
+        Cliente cliente = new Cliente(idCliente, nombre, apellido, email, telefono, saldo);
+        
+
+        //Insertamos el nuevo objeto en la base de datos
+        int registrosModificados = new ClienteDaoJDBC().actualizar(cliente);
+        System.out.println("registrosModificados = " + registrosModificados);
+
+        //Redirigimos hacia accion por default
+        this.accionDefault(request, response);
+        
     }
 }

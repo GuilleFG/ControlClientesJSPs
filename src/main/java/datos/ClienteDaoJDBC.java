@@ -57,7 +57,7 @@ public class ClienteDaoJDBC {
         ResultSet rs = null;
         try {
             conn = Conexion.getConnection();
-            stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
+            stmt = conn.prepareStatement(SQL_SELECT_BY_ID,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             stmt.setInt(1, cliente.getIdCliente());
             rs = stmt.executeQuery();
             rs.absolute(1);//nos posicionamos en el primer registro devuelto

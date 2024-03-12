@@ -24,7 +24,7 @@
                                 <tr>
                                     <td>${status.count}</td>
                                     <td>${cliente.nombre} ${cliente.apellido}</td>
-                                    <td><fmt:formatNumber value="${cliente.saldo}" type="currency" /></td>
+                                    <td><fmt:formatNumber value="${cliente.saldo}" type="currency"/></td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/ServletControlador?accion=editar&idCliente=${cliente.idCliente}" 
                                            class="btn btn-secondary">
